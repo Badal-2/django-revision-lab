@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #e3f2fd, #bbdefb);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1976d2;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            overflow-x: auto;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        thead {
+            background-color: #1565c0;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #e3f2fd;
+            transform: scale(1.01);
+            transition: all 0.2s ease-in-out;
+        }
+
+        img.profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #1976d2;
+        }
+
+        .no-data {
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+            margin-top: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
+    <script>
+        function highlightRow(row) {
+            row.style.backgroundColor = "#bbdefb";
+            setTimeout(() => {
+                row.style.backgroundColor = "";
+            }, 500);
+        }
+    </script>
+</head>
+<body>
+
+    <header>📋 Employee List</header>
+
+    <div class="container">
+        {% if em %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Department</th>
+                    <th>Position</th>
+                    <th>Salary</th>
+                    <th>Join Date</th>
+                    <th>Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in em %}
+                <tr onclick="highlightRow(this)">
+                    <td><img src="https://i.pravatar.cc/40?img={{ forloop.counter }}" class="profile" alt="Profile"></td>
+                    <td>{{ e.first_name }}</td>
+                    <td>{{ e.last_name }}</td>
+                    <td>{{ e.email }}</td>
+                    <td>{{ e.phone }}</td>
+                    <td>{{ e.department }}</td>
+                    <td>{{ e.position }}</td>
+                    <td>₹ {{ e.salary }}</td>
+                    <td>{{ e.join_date }}</td>
+                    <td>{% if e.is_active %}✅{% else %}❌{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="no-data">No employees found.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

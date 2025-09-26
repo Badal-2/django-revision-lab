@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Upload Photo</title>
+  <style>
+    body{ font-family: Arial; background:#f0f4f8; padding:30px }
+    .card{ background:white; padding:20px; border-radius:8px; width:420px; margin:auto; box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+    input[type="submit"]{ background:#1976d2; color:white; border:none; padding:10px 16px; border-radius:6px; cursor:pointer }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Upload Image</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Upload">
+    </form>
+    <p><a href="{% url 'gallery' %}">Back to gallery</a></p>
+  </div>
+</body>
+</html>

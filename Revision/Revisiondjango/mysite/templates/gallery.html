@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Gallery</title>
+  <style>
+    body{ font-family: Arial; background: linear-gradient(180deg,#e8f0ff,#fbfcff); padding:20px }
+    .wrap{ max-width:1000px; margin:0 auto }
+    header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:16px }
+    .grid{ display:grid; grid-template-columns: repeat(auto-fill,minmax(180px,1fr)); gap:16px }
+    .card{ background:white; padding:12px; border-radius:8px; box-shadow:0 3px 8px rgba(0,0,0,0.08); text-align:center }
+    .card img{ max-width:100%; height:140px; object-fit:cover; border-radius:6px }
+    .btn{ display:inline-block; padding:6px 10px; border-radius:6px; text-decoration:none; margin-top:8px }
+    .download{ background:#1976d2; color:white }
+    .upload{ background:#4caf50; color:white }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Image Gallery</h1>
+      <div>
+        <a href="{% url 'upload' %}" class="btn upload">Upload new</a>
+      </div>
+    </header>
+
+    {% if photos %}
+      <div class="grid">
+        {% for p in photos %}
+        <div class="card">
+          <img src="{{ p.image.url }}" alt="{{ p.title }}">
+          <div style="padding-top:8px; font-weight:600;">{{ p.title|default:"Untitled" }}</div>
+          <div style="color:#666; font-size:13px;">{{ p.uploaded_at|date:"M d, Y H:i" }}</div>
+          <a class="btn download" href="{% url 'download_image' p.pk %}">Download</a>
+        </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No images uploaded yet. <a href="{% url 'upload' %}">Upload one</a>.</p>
+    {% endif %}
+  </div>
+</body>
+</html>
